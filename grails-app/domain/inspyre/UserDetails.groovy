@@ -5,10 +5,12 @@ class UserDetails {
     User user
     String email
     String names
-    int ageRange
+    List ageRange
     Gender gender
     Date dob
     Boolean isLimited = true
+
+    static hasMany = [ageRange: int]
 
     static constraints = {
         user unique: true
