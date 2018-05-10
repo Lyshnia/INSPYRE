@@ -1,0 +1,11 @@
+import inspyre.User
+
+response.status 200
+
+model {
+    User user
+}
+
+json {
+    username user.username
+}

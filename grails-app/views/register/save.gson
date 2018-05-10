@@ -1,0 +1,11 @@
+import inspyre.ResponseCodes.Create
+
+response.status 200
+
+model {
+    Create status
+}
+
+json {
+    status status.getValue()
+}
