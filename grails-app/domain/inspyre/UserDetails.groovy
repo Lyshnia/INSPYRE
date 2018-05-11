@@ -1,16 +1,17 @@
 package inspyre
 
+import java.time.LocalDate
+
 class UserDetails {
 
     User user
     String email
     String names
-    List ageRange
+    String ageRange
     Gender gender
-    Date dob
+    LocalDate dob
     Boolean isLimited = true
 
-    static hasMany = [ageRange: int]
 
     static constraints = {
         user unique: true

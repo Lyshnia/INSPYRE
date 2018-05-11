@@ -3,7 +3,9 @@ package inspyre
 import grails.gorm.transactions.Transactional
 import inspyre.ResponseCodes.Create
 
-import java.text.ParseException
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 @Transactional
 class RegisterService {
@@ -30,6 +32,9 @@ class RegisterService {
 
             //Create SSR User
             user = new User(username: username, password: password).save()
+            //Add User Role
+            Role role = Role.findOrSaveWhere(authority: 'ROLE_USER')
+            UserRole.create(user, role)
 
             //Add userDetails
             new UserDetails(user: user, names: names, email: email).save()
@@ -71,7 +76,7 @@ class RegisterService {
 
         Create Status = Create.SUCCESS
 
-        if (person.size() > 0) {
+        if (person != null && person.size() > 0) {
             UserDetails userDetails = UserDetails.findByUser(user)
 
             if (person.containsKey('gender')) {
@@ -80,17 +85,14 @@ class RegisterService {
 
             if (person.containsKey('dob')) {
                 try {
-                    userDetails.dob = new Date().parse("dd/MM/yyyy", person['dob'])
-                } catch (ParseException e) {
+                    userDetails.dob = LocalDate.parse(person['dob'], DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                } catch (DateTimeParseException e) {
                     return Create.INVALID_DOB
                 }
             }
 
             if (person.containsKey('agerange')) {
-                String[] range = person['agerange'].split('-')
-
-                userDetails.ageRange.add(0, range[0])
-                userDetails.ageRange.add(1, range[1])
+                userDetails.ageRange  = person['agerange']
             }
 
             if (!userDetails.validate()) {
@@ -101,8 +103,8 @@ class RegisterService {
 
         }
 
-        if (geo.size() > 0) {
-            UserGeo userGeo = UserGeo.findByUser(user)
+        if (geo != null && geo.size() > 0) {
+            UserGeo userGeo = UserGeo.findOrSaveWhere(user:  user)
 
             userGeo.city = geo['city']
             userGeo.state = geo['state']

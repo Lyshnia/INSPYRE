@@ -1,4 +1,4 @@
-package inspyre.User
+package inspyre
 
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
@@ -11,7 +11,7 @@ class RegisterControllerSpec extends Specification implements ControllerUnitTest
     def cleanup() {
     }
 
-    void "test something"() {
+    void "something"() {
         expect:"fix me"
         true == false
     }
