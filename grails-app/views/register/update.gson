@@ -4,10 +4,8 @@ response.status 200
 
 model {
     Create status
-    boolean isComplete
 }
 
 json {
     status status.getValue()
-    isComplete isComplete
 }

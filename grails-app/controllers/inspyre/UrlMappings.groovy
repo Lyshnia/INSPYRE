@@ -7,7 +7,7 @@ class UrlMappings {
         get "/api/$controller(.$format)?"(action:"index")
         get "/api/$controller/$id(.$format)?"(action:"show")
         post "/api/$controller(.$format)?"(action:"save")
-        put "/api/$controller/$id(.$format)?"(action:"update")
+        put "/api/$controller/$username(.$format)?"(action:"update")
         patch "/api/$controller/$id(.$format)?"(action:"patch")
 
         "/"(controller: 'application', action:'index')
