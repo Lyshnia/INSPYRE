@@ -18,4 +18,12 @@ public enum Create {
         return id;
     }
 
+    public static Create convert(int id) {
+        for (Create type : Create.values()) {
+            if (type.id == id) {
+                return type;
+            }
+        }
+        return null;
+    }
 }
